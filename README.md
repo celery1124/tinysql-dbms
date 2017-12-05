@@ -17,6 +17,7 @@
 1) make
 2) Run
 	i) run directly as ./tinysql-dbms in powershell and input query manually (q or quit to exit).
+	
 	ii) use a file script using ./tinysql-dbms script.txt
 
 Any questions, please contact celery1124@tamu.edu, tang16@tamu.edu
