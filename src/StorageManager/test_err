@@ -1,0 +1,68 @@
+getFieldName ERROR: offset -1 out of bound
+getFieldName ERROR: offset 4 out of bound
+getFieldType ERROR: offset -1 out of bound
+getFieldType ERROR: offset 4 out of bound
+getFieldOffset ERROR: field name test is not found
+getFieldOffset ERROR: field name test is not found
+Schema ERROR: repeated field names f4 at offset 3 and 4
+Schema ERROR: empty field name at offset 4
+Schema ERROR: at most 8 fields are allowed
+Schema ERROR: size of field_names and size of field_types do not match
+Schema ERROR: empty fields
+
+createRelation ERROR: ExampleTable1 already exists
+createRelation ERROR: empty schema
+createRelation ERROR: empty relation name
+getSchema ERROR: relation ExampleTable2 does not exist
+getRelation ERROR: relation ExampleTable2 does not exist
+deleteRelation ERROR: relation ExampleTable2 does not exist
+
+setField ERROR: field type not INT!
+setField ERROR: offset -1 is out of bound!
+setField ERROR: offset 4 is out of bound!
+setField ERROR: field type not STR20!
+setField ERROR: field name f5 not found
+getField ERROR: offset -1 is out of bound!
+getField ERROR: offset 4 is out of bound!
+setTuple ERROR: tuples' schemas do not match
+setTuple ERROR: tuple offet -1 out of bound
+setTuple ERROR: tuple offet 2 out of bound of the block
+getTuple ERROR: tuple offet -1 out of bound
+getTuple ERROR: tuple offet 2 out of bound of the block
+nullTuple ERROR: tuple offet -1 out of bound
+nullTuple ERROR: tuple offet 2 out of bound
+appendTuple ERROR: the block is full
+
+getBlock ERROR: block index -1 out of disk bound
+getBlock ERROR: block index 6 out of disk bound
+getBlock ERROR: block index -1 out of bound in memory
+getBlock ERROR: block index 10 out of bound in memory
+getBlocks ERROR: block index -1 out of disk bound
+getBlocks ERROR: block index 6 out of disk bound
+getBlocks ERROR: block index -1 out of bound in memory
+getBlocks ERROR: block index 10 out of bound in memory
+getBlocks ERROR: access to block out of memory bound: 10
+getBlocks ERROR: block index 6 out of disk bound
+setBlock ERROR: block index -1 out of bound in relation
+setBlock ERROR: block index-1 out of bound in memory
+setBlock ERROR: block index10 out of bound in memory
+setBlocks ERROR: block index -1 out of bound in relation
+setBlocks ERROR: block index -1 out of bound in memory
+setBlocks ERROR: block index 10 out of bound in memory
+setBlocks ERROR: access to block out of memory bound: 10
+shrinkTrack ERROR: block index -1 out of disk bound
+shrinkTrack ERROR: block index 6 out of disk bound
+setBlock ERROR: The tuple at offest 0 of memory block 0 has a different schema.
+setBlocks ERROR: The tuple at offest 0 of memory block 0 has a different schema.
+
+getBlock ERROR: block index -1 out of memory bound
+getBlock ERROR: block index 10 out of memory bound
+setBlock ERROR: block index -1 out of memory bound
+setBlock ERROR: block index 10 out of memory bound
+getTuples ERROR: block index -1 out of memory bound
+getTuples ERROR: block index 10 out of memory bound
+getTuples ERROR: num of blocks 0 too few
+getTuples ERROR: access to block out of memory bound: 10
+setTuples ERROR: block index -1 out of memory bound
+setTuples ERROR: block index 10 out of memory bound
+getTuples ERROR: schema at memory block 2 has a different schema

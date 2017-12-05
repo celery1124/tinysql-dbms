@@ -1,0 +1,56 @@
+Please make sure to include all the .h files in your own program.
+Before compiling, review the parameter settings in Config.h.
+
+The file TestStorageManager.cpp is a test program. 
+The program writes output to the file test_log.
+The program also generates error message from the parts of error testing.
+
+If you find a bug when using the library, please report to the TA immediately.
+
+========================================================================================
+
+The StorageManager library simulates disk and memory storage in "the memory" of your computer. You will build a single-user Tiny-SQL interpreter upon the StorageManager, storing data in the simulated disk, and get the data from the simulated disk to the simulated memory for further processing. Because the storage is simulated in the memory, everytime your simulated database will start running with empty storage. When the user inputs SQL statements, such as doing insertion, deletion, updating, and querying, the interpreter should access simulated disk and simulated memory. When the database system terminates, the data in the simulated storage are lost.
+
+The data structure of StorageManager is summerized below in a bottom-up fasion:
+
+- Field.h: A field type can be an integer (INT) or a string (STR20).
+
+- Class "Tuple": A tuple equals a record/row in a relation/table. A tuple contains at most MAX_NUM_OF_FIELDS_IN_RELATION=8 fields. Each field in a tuple has offset 0,1,2,... respectively. The order is defined in the schema. You can access a field by its offset or its field name.
+
+- Class "Block": A disk or memory block contains a number of records/tuples that belong to the same relation. A tuple CANNOT be splitted and stored in more than one blocks. Each block is defined to hold as most FIELDS_PER_BLOCK fields. The max number of tuples held in a block can be calculated from the size of a tuple, which is the number of fields in a tuple. 
+
+   The max number of tuples held in a block = FIELDS_PER_BLOCK / num_of_fields_in_tuple
+
+  You can also get the number by calling Schema::getTuplesPerBlock().
+
+- Class "Relation": Each relation is assumed to be stored in consecutive disk blocks on a single track of the disk (That is, in clustered way). The disk blocks on the track are numbered by 0,1,2,... The tuples in a relation cannot be read directly. You have to copy disk blocks of the relation to memory blocks before accessing the tuples inside the blocks. In the other direction, if you need to write to the relation, you have to write to a memory block, and then copy the memory block to a disk block of the relation. The Relation class can be used to create a new Tuple.
+
+- Class "Schema": A schema specifies what a tuple of a partiular relation contains, including field names, and field types in a defined order. The field names and types are given offsets according to the defined order. Every schema specifies at most total MAX_NUM_OF_FIELDS_IN_RELATION=8 fields. The size of a tuple is the total number of fields specified in the schema. The tuple size will affect the number of tuples which can be held in one disk block or memory block.
+
+- Class "SchemaManager": A schema manager stores relations and schemas, and maps a relation name to a relation and the corresponding schema. You will always create a relation through the schema manager by specifying a relation name and a schema. You will also get access to relations from SchemaManager.
+
+- Class "Disk": Simplified assumptions are made for disks. A disk contains many tracks. We assume each relation reside on a single track of blocks on disk. Everytime to read or write blocks of a relation takes time below:
+
+   (AVG_SEEK_TIME + AVG_ROTATION_LATENCY + AVG_TRANSFER_TIME_PER_BLOCK * num_of_consecutive_blocks)
+
+  The number of disk I/Os is calculated by the number of blocks read or written.
+  Please NOTE that you do not need to access the Disk directly. Accessing to a Relation is sufficient for any operation. The Relation class will call the Disk automatically.
+
+- Class "MainMemory": The simulated memory holds NUM_OF_BLOCKS_IN_MEMORY blocks numbered by 0,1,2,... When testing the correctness of the interpreter, NUM_OF_BLOCKS_IN_MEMORY will be set to 10. When measuring the performance of the interpreter using one thousand 5-8 field tuples, NUM_OF_BLOCKS_IN_MEMORY will be set to 300. You can get total number of blocks in the memory by calling MainMemory::getMemorySize(). Before accessing data of a relation, you have to copy the disk blocks of a relation to the simulated main memory. Then, access the tuples in the simulated main memory. Or in the other direction, you will copy the memory blocks to disk blocks of a relation when writing data to the relation. Because the size of memory is limited, you have to do the database operations wisely. We assume there is no latency in accessing memory.
+
+========================================================================================
+
+Below is a short description of how to use the library.
+
+1. At the beginning of your program, you have to create a MainMemory, a Disk, and a SchemaManager. The three objects will be used throughout the whole program.
+
+2. You have to handle the disk block addresses and memory block addresses by yourselves. The library does not decide for you where to store the data. You should always start with creating a Schema object, creating a Relation from the SchemaManager by specifying a name, say "Student", and the Schema, and getting a pointer to the created Relation. Then, create a Tuple of the Relation through the Relation class. Get a pointer to an empty memory Block, say block 7, from the MainMemory. Store the created Tuple by "appending" it to empty memory Block 7. Finally copy the memory block to the disk block of the created Relation, say, copying memory block 7 to the disk block 0 of the Relation "Student". 
+
+3. When you need to browse the data of a Relation, copy disk blocks of the Relation to memory blocks, and access the tuples from the Blocks of the MainMemory. There are two ways  to access the tuples. You can get a pointer to a specific Block of the MainMemory, and access the Tuples inside the Block. Otherwise, you can also access directly the Tuples stored in consecutive memory blocks by calling the functions of the MainMemory. The Tuples will be returned in a vector. It is convenient to sort or build a heap on the vector of Tuples.
+
+4. The data of each relation are assumed to be stored in a dense/clustered/contiguous way in the disk. Each relation has data stored in disk block 0, 1, 2,...,and there is no size limit. A way to maintain dense disk blocks is: every time before you "insert a tuple", you should copy the last disk block of the relation, say block R, to the memory block M. Append the inserting tuple to the memory block M if the block M is not full. Then, copy the memory block M back to the disk block R. However, if the memory block M is full, which says the last disk block R is full, you have to insert the tuple to the next disk block R+1. Thus instead, get an empty memory block M', insert the tuple to beginning of the memory block M', and copy that memory block M' to the disk block R+1.
+
+5. When deleting a Tuple of Block R from the relation, the simplest way is to copy the Block R to memory, "null" the Tuple, and rewrite the modified memory block to the same place, Block R, in the relation. In this way, there might be holes in the Block and in the Relation, so be sure to consider the holes when doing every SQL operation. You certainly can have other way of managing tuple deletion. Bear in mind that reading and writing disk/relation blocks take time.
+
+You are recommended to read the usage of each class in .h files. Then, trace the test program TestStorageManager.cpp, which demonstrates how to use the library. You don't need to read the implementation of the library in StorageManager.cpp. If you have questions about how a function is implemented, please contact TA.
+

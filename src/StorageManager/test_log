@@ -1,0 +1,635 @@
+=======================Initialization=========================
+The memory contains 10 blocks
+******MEMORY DUMP BEGIN******
+0: 
+1: 
+2: 
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+******MEMORY DUMP END******
+
+=======================Schema=========================
+Creating a schema
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+The schema has 4 fields
+The schema allows 2 tuples per block
+The schema has field names: 
+f1 f2 f3 f4 
+The schema has field types: 
+STR20	STR20	INT	STR20	
+The first field is of name f1
+The second field is of type STR20
+The field f3 is of type INT
+The field f4 is at offset 3
+
+Error testing: 
+
+=====================Relation & SchemaManager=========================
+Creating table ExampleTable1
+The table has name ExampleTable1
+The table has schema:
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+The table currently have 0 blocks
+The table currently have 0 tuples
+
+Error testing: 
+
+Current schemas and relations: 
+ExampleTable1
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+From the schema manager, the table ExampleTable1 exists: TRUE
+From the schema manager, the table ExampleTable1 has schema:
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+From the schema manager, the table ExampleTable1 has schema:
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+Creating table ExampleTable2 with the same schema
+After creating a realtion, current schemas and relations: 
+ExampleTable1
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+ExampleTable2
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+Creating table ExampleTable3 with a different schema
+The schema has field names: 
+f1 f2 f3 f4 
+The schema has field types: 
+STR20	INT	INT	STR20	After creating a realtion, current schemas and relations: 
+ExampleTable1
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+ExampleTable2
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+ExampleTable3
+f1 STR20;
+f2 INT;
+f3 INT;
+f4 STR20;
+Deleting table ExampleTable2
+After deleting a realtion, current schemas and relations: 
+ExampleTable1
+f1 STR20;
+f2 STR20;
+f3 INT;
+f4 STR20;
+ExampleTable3
+f1 STR20;
+f2 INT;
+f3 INT;
+f4 STR20;
+
+Error testing: 
+The table ExampleTable2 exists: FALSE
+
+====================Tuple=============================
+Created a tuple v11	21	31	v41	 through the relation
+The tuple is invalid? FALSE
+The tuple has schema
+f1 STR20;
+f2 INT;
+f3 INT;
+f4 STR20;
+A block can allow at most 2 such tuples
+The tuple has fields: 
+v11	21	31	v41	
+The tuple has fields: 
+v11	21	31	v41	
+
+Error testing: 
+
+===================Block=============================
+Clear the memory block 0
+Set the tuple at offset 0 of the memory block 0
+Now the memory block 0 contains:
+v11	21	31	v41	
+The block is full? false
+The block currently has 1 tuples
+The tuple at offset 0 of the block is:
+v11	21	31	v41	
+
+Append the same tuple to the memory block 0
+Now the memory block 0 contains:
+v11	21	31	v41	
+v11	21	31	v41	
+The block is full? true
+The block currently has 2 tuples
+The tuple at offset 0 of the block is:
+v11	21	31	v41	
+Again the tuples in the memory block 0 are:
+v11	21	31	v41	
+v11	21	31	v41	
+
+Erase the first tuple
+Now the memory block 0 contains:
+(hole)
+v11	21	31	v41	
+Erase all the tuples in the block
+Now the memory block 0 contains:
+(hole)
+(hole)
+(Remove all tuples;) Set only the first tuple
+Now the memory block 0 contains:
+v11	21	31	v41	
+
+(Remove all tuples;) Set the same two tuples again
+Now the memory block 0 contains:
+v11	21	31	v41	
+v11	21	31	v41	
+Error testing: 
+
+
+======How to append tuples to the end of the relation======
+Now memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: 
+2: 
+3: 
+4: 
+5: 
+6: 
+7: 
+8: 
+9: 
+******MEMORY DUMP END******
+The relation is empty
+Get the handle to the memory block 5 and clear it
+Write to the first block of the relation
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: 
+2: 
+3: 
+4: 
+5: v11	21	31	v41	
+6: 
+7: 
+8: 
+9: 
+******MEMORY DUMP END******
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: v11	21	31	v41	
+******RELATION DUMP END******
+
+Create the second tuple 
+v12	22	32	v42	
+Read the last block of the relation into memory block 5:
+(The block is not full: Append it directly)
+Write to the last block of the relation
+*NOTE: The example here does not consider empty tuples (if any) in the block.
+(The holes left after tuple deletion)
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: 
+2: 
+3: 
+4: 
+5: v11	21	31	v41	
+v12	22	32	v42	
+6: 
+7: 
+8: 
+9: 
+******MEMORY DUMP END******
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: v11	21	31	v41	
+v12	22	32	v42	
+******RELATION DUMP END******
+
+Create the third tuple 
+v13	23	33	v43	
+Read the last block of the relation into memory block 5:
+(The block is full: Clear the memory block and append the tuple)
+Write to a new block at the end of the relation
+*NOTE: The example here does not consider empty tuples (if any) in the block.
+(The holes left after tuple deletion)
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: 
+2: 
+3: 
+4: 
+5: v13	23	33	v43	
+6: 
+7: 
+8: 
+9: 
+******MEMORY DUMP END******
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: v11	21	31	v41	
+v12	22	32	v42	
+1: v13	23	33	v43	
+******RELATION DUMP END******
+
+
+======How to read and write bulk blocks======
+First fill the relations with 10 more tuples
+Read the last block of the relation into memory block 5:
+(The block is not full: Append it directly)
+Write to the last block of the relation
+Read the last block of the relation into memory block 5:
+(The block is full: Clear the memory block and append the tuple)
+Write to a new block at the end of the relation
+Read the last block of the relation into memory block 5:
+(The block is not full: Append it directly)
+Write to the last block of the relation
+Read the last block of the relation into memory block 5:
+(The block is full: Clear the memory block and append the tuple)
+Write to a new block at the end of the relation
+Read the last block of the relation into memory block 5:
+(The block is not full: Append it directly)
+Write to the last block of the relation
+Read the last block of the relation into memory block 5:
+(The block is full: Clear the memory block and append the tuple)
+Write to a new block at the end of the relation
+Read the last block of the relation into memory block 5:
+(The block is not full: Append it directly)
+Write to the last block of the relation
+Read the last block of the relation into memory block 5:
+(The block is full: Clear the memory block and append the tuple)
+Write to a new block at the end of the relation
+Read the last block of the relation into memory block 5:
+(The block is not full: Append it directly)
+Write to the last block of the relation
+Read the last block of the relation into memory block 5:
+(The block is full: Clear the memory block and append the tuple)
+Write to a new block at the end of the relation
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: v11	21	31	v41	
+v12	22	32	v42	
+1: v13	23	33	v43	
+v13	23	33	v43	
+2: v13	23	33	v43	
+v13	23	33	v43	
+3: v13	23	33	v43	
+v13	23	33	v43	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+******RELATION DUMP END******
+
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: 
+2: 
+3: 
+4: 
+5: v13	23	33	v43	
+6: 
+7: 
+8: 
+9: 
+******MEMORY DUMP END******
+Read bulk blocks from the relation to memory block 3-9
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: 
+2: 
+3: v11	21	31	v41	
+v12	22	32	v42	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+v13	23	33	v43	
+7: v13	23	33	v43	
+v13	23	33	v43	
+8: v13	23	33	v43	
+v13	23	33	v43	
+9: v13	23	33	v43	
+******MEMORY DUMP END******
+Write bulk blocks from the memory block 3-9 to the end of the relation
+(May result in 'holes' in the relation)
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: v11	21	31	v41	
+v12	22	32	v42	
+1: v13	23	33	v43	
+v13	23	33	v43	
+2: v13	23	33	v43	
+v13	23	33	v43	
+3: v13	23	33	v43	
+v13	23	33	v43	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+(hole)
+7: v11	21	31	v41	
+v12	22	32	v42	
+8: v13	23	33	v43	
+v13	23	33	v43	
+9: v13	23	33	v43	
+v13	23	33	v43	
+10: v13	23	33	v43	
+v13	23	33	v43	
+11: v13	23	33	v43	
+v13	23	33	v43	
+12: v13	23	33	v43	
+v13	23	33	v43	
+13: v13	23	33	v43	
+******RELATION DUMP END******
+Deleting the last 7 blocks of the relation
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: v11	21	31	v41	
+v12	22	32	v42	
+1: v13	23	33	v43	
+v13	23	33	v43	
+2: v13	23	33	v43	
+v13	23	33	v43	
+3: v13	23	33	v43	
+v13	23	33	v43	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+(hole)
+******RELATION DUMP END******
+
+
+======How to delete tuples from the relation======
+Reading the first block of the relation into memory block 1:
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: v11	21	31	v41	
+v12	22	32	v42	
+2: 
+3: v11	21	31	v41	
+v12	22	32	v42	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+v13	23	33	v43	
+7: v13	23	33	v43	
+v13	23	33	v43	
+8: v13	23	33	v43	
+v13	23	33	v43	
+9: v13	23	33	v43	
+******MEMORY DUMP END******
+Deleting the tuple at offset 0 of the memory block 1
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: (hole)
+v12	22	32	v42	
+2: 
+3: v11	21	31	v41	
+v12	22	32	v42	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+v13	23	33	v43	
+7: v13	23	33	v43	
+v13	23	33	v43	
+8: v13	23	33	v43	
+v13	23	33	v43	
+9: v13	23	33	v43	
+******MEMORY DUMP END******
+Writing memory block 1 back to the first block of the relation
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: (hole)
+v12	22	32	v42	
+1: v13	23	33	v43	
+v13	23	33	v43	
+2: v13	23	33	v43	
+v13	23	33	v43	
+3: v13	23	33	v43	
+v13	23	33	v43	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+(hole)
+******RELATION DUMP END******
+Reading the last block of the relation into memory block 1:
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: v13	23	33	v43	
+(hole)
+2: 
+3: v11	21	31	v41	
+v12	22	32	v42	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+v13	23	33	v43	
+7: v13	23	33	v43	
+v13	23	33	v43	
+8: v13	23	33	v43	
+v13	23	33	v43	
+9: v13	23	33	v43	
+******MEMORY DUMP END******
+Emptying the tuples at the memory block 1
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: (hole)
+(hole)
+2: 
+3: v11	21	31	v41	
+v12	22	32	v42	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+v13	23	33	v43	
+7: v13	23	33	v43	
+v13	23	33	v43	
+8: v13	23	33	v43	
+v13	23	33	v43	
+9: v13	23	33	v43	
+******MEMORY DUMP END******
+Writing memory block 1 back to the last block of the relation
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: (hole)
+v12	22	32	v42	
+1: v13	23	33	v43	
+v13	23	33	v43	
+2: v13	23	33	v43	
+v13	23	33	v43	
+3: v13	23	33	v43	
+v13	23	33	v43	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: (hole)
+(hole)
+******RELATION DUMP END******
+Deleting the last block of the relation to remove trailing space
+Now the relation contains: 
+******RELATION DUMP BEGIN******
+f1	f2	f3	f4	
+0: (hole)
+v12	22	32	v42	
+1: v13	23	33	v43	
+v13	23	33	v43	
+2: v13	23	33	v43	
+v13	23	33	v43	
+3: v13	23	33	v43	
+v13	23	33	v43	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+******RELATION DUMP END******
+
+Error testing of Relation: 
+
+===================Memory=============================
+Reading the first block of the relation into memory block 9:
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: (hole)
+(hole)
+2: 
+3: v11	21	31	v41	
+v12	22	32	v42	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: v13	23	33	v43	
+v13	23	33	v43	
+7: v13	23	33	v43	
+v13	23	33	v43	
+8: v13	23	33	v43	
+v13	23	33	v43	
+9: (hole)
+v12	22	32	v42	
+******MEMORY DUMP END******
+Copy the memory block 9 to memory block 6-8:
+(You might not need this function)
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: (hole)
+(hole)
+2: 
+3: v11	21	31	v41	
+v12	22	32	v42	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: (hole)
+v12	22	32	v42	
+7: (hole)
+v12	22	32	v42	
+8: (hole)
+v12	22	32	v42	
+9: (hole)
+v12	22	32	v42	
+******MEMORY DUMP END******
+Get the tuples in memory block 6-9
+(Can apply sorting and heap building to the tuples later):
+v12	22	32	v42	
+v12	22	32	v42	
+v12	22	32	v42	
+v12	22	32	v42	
+
+Write the 'condensed' tuples to memory block 1-2:
+Now the memory contains: 
+******MEMORY DUMP BEGIN******
+0: v11	21	31	v41	
+v11	21	31	v41	
+1: v12	22	32	v42	
+v12	22	32	v42	
+2: v12	22	32	v42	
+v12	22	32	v42	
+3: v11	21	31	v41	
+v12	22	32	v42	
+4: v13	23	33	v43	
+v13	23	33	v43	
+5: v13	23	33	v43	
+v13	23	33	v43	
+6: (hole)
+v12	22	32	v42	
+7: (hole)
+v12	22	32	v42	
+8: (hole)
+v12	22	32	v42	
+9: (hole)
+v12	22	32	v42	
+******MEMORY DUMP END******
+Error testing: 
+Real elapse time = 1279 ms
+Calculated elapse time = 692.16 ms
+Calculated Disk I/Os = 44
