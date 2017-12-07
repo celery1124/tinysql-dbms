@@ -2,7 +2,7 @@
 
 
 1 Files included?
-1) tinysql-dbms/ project files (Visual studio 2015), includes all the source code for the database management system (also including the storage manager library)
+1) tinysql-dbms/ includes all the source code for the database management system (also including the storage manager library)
 	src/Common.h all the imclude headers and some global enum
 	src/ConditionParser.h  interface and implementations of the condition parser and evaluator (revese polish algorithm)
 	src/DatabaseManager.h  interface and implementations of the database management system (including create/drop table, insert/delete tuples select statement: table scan, sorting, duplication removal, multi-table cross/natural/theta join)
