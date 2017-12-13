@@ -16,7 +16,7 @@
 2 How to build and run the program?
 1) make
 2) Run
-	i) run directly as ./tinysql-dbms in powershell and input query manually (q or quit to exit).
+	i) run directly ./tinysql-dbms in shell and input query manually (q or quit to exit).
 	
 	ii) use a file script using ./tinysql-dbms script.txt
 
