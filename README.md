@@ -22,5 +22,4 @@
 
 Any questions, please contact celery1124@tamu.edu, tang16@tamu.edu
 
-Best regards,
 Mian Qin, Songyuan Tang
